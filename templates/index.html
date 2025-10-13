@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Random Quote Generator</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; max-width: 600px; margin: 50px auto; }
+        .quote-box { border: 1px solid #eee; padding: 20px; margin-top: 20px; border-radius: 8px; min-height: 100px; }
+        button { font-size: 1.2rem; padding: 10px 20px; cursor: pointer; }
+    </style>
 </head>
 <body>
-    <h1>Project Foundation is Set Up!</h1>
-    <p>The Flask server is running and serving this HTML page.</p>
+    <h1>Random Quote Generator</h1>
+
+    <form action="/" method="POST">
+        <button type="submit">Get a New Quote</button>
+    </form>
+
+    <div class="quote-box">
+        {% if quote %}
+            <p>"{{ quote }}"</p>
+            <p><em>- {{ author }}</em></p>
+        {% endif %}
+    </div>
+
 </body>
 </html>

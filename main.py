@@ -1,12 +1,17 @@
 # Import the tools we need
 from flask import Flask, render_template, request
-import requests # This is the library we use to make web requests
+import random # We'll use the random library to pick a quote
 
 # Initialize our Flask app
 app = Flask(__name__)
 
-# This is the URL of the free Quote API
-QUOTE_API_URL = "https://api.quotable.io/random"
+# THIS IS OUR NEW "FAKE" API. IT'S JUST A LIST OF QUOTES.
+FAKE_QUOTES = [
+    {"author": "Walt Disney", "quote": "The way to get started is to quit talking and begin doing."},
+    {"author": "Nelson Mandela", "quote": "The greatest glory in living lies not in never falling, but in rising every time we fall."},
+    {"author": "Steve Jobs", "quote": "Your time is limited, so don't waste it living someone else's life."},
+    {"author": "Eleanor Roosevelt", "quote": "The future belongs to those who believe in the beauty of their dreams."}
+]
 
 # This is the main route for our webpage
 @app.route('/', methods=['GET', 'POST'])
@@ -17,14 +22,10 @@ def index():
 
     # Check if the user clicked the button on our webpage
     if request.method == 'POST':
-        # Make a request to the Quote API
-        response = requests.get(QUOTE_API_URL)
-        # Parse the JSON response into a Python dictionary
-        data = response.json()
-
-        # Get the quote content and author from the dictionary
-        quote_text = data['content']
-        quote_author = data['author']
+        # INSTEAD OF CALLING THE INTERNET, WE JUST PICK A RANDOM QUOTE FROM OUR LIST
+        random_quote_data = random.choice(FAKE_QUOTES)
+        quote_text = random_quote_data['quote']
+        quote_author = random_quote_data['author']
 
     # Render the HTML page, passing the quote data to it
     return render_template('index.html', quote=quote_text, author=quote_author)
